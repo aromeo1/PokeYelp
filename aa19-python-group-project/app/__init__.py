@@ -7,6 +7,10 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.pokemon_routes import pokemon_routes
+from .api.review_routes import review_routes
+from .api.list_routes import list_routes
+from .api.image_routes import image_routes
 from .seeds import seed_commands
 from .config import Config
 
