@@ -1,20 +1,37 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
+from werkzeug.security import generate_password_hash
 
 
-# Adds a demo user, you can add other users here if you want
+# Adds demo users with proper password hashing
 def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
-
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    users = [
+        {"username": "Demo", "email": "demo@aa.io", "password": "password"},
+        {"username": "marnie", "email": "marnie@aa.io", "password": "password"},
+        {"username": "bobbie", "email": "bobbie@aa.io", "password": "password"},
+        {"username": "ash", "email": "ash@aa.io", "password": "password"}
+    ]
+    
+    created_users = {}
+    for user_data in users:
+        # Check if user already exists
+        existing_user = User.query.filter_by(username=user_data["username"]).first()
+        if not existing_user:
+            user = User(
+                username=user_data["username"], 
+                email=user_data["email"], 
+                password=user_data["password"]
+            )
+            db.session.add(user)
+            db.session.flush()
+            created_users[user.username] = user
+        else:
+            created_users[existing_user.username] = existing_user
+    
     db.session.commit()
+    
+    # Return the created users for reference in other seeders
+    return created_users
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't

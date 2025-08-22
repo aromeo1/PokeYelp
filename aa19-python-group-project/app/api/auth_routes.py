@@ -63,6 +63,24 @@ def sign_up():
     return form.errors, 401
 
 
+@auth_routes.route('/demo', methods=['POST'])
+def demo_login():
+
+    demo_user = User.query.filter_by(email='demo@user.io').first()
+    
+    if not demo_user:
+        demo_user = User(
+            username='DemoUser',
+            email='demo@user.io',
+            password='password'
+        )
+        db.session.add(demo_user)
+        db.session.commit()
+    
+    login_user(demo_user)
+    return demo_user.to_dict()
+
+
 @auth_routes.route('/unauthorized')
 def unauthorized():
     """

@@ -32,12 +32,19 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(pokemon_routes, url_prefix='/api/pokemon')
+app.register_blueprint(review_routes, url_prefix='/api/reviews')
+app.register_blueprint(list_routes, url_prefix='/api/lists')
+app.register_blueprint(image_routes, url_prefix='/api/images')
 db.init_app(app)
 Migrate(app, db)
 
-# Application Security
-CORS(app)
-
+# Application Security - Updated for better CORS handling
+CORS(app, 
+     supports_credentials=True, 
+     origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5001", "http://127.0.0.1:5001"],
+     allow_headers=["Content-Type", "Authorization", "X-CSRF-Token"],
+     expose_headers=["Content-Type", "X-CSRF-Token"])
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
@@ -59,9 +66,8 @@ def inject_csrf_token(response):
         'csrf_token',
         generate_csrf(),
         secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
-        samesite='Strict' if os.environ.get(
-            'FLASK_ENV') == 'production' else None,
-        httponly=True)
+        samesite='Lax' if os.environ.get('FLASK_ENV') == 'production' else None,
+        httponly=False)  # Changed to False to allow frontend access
     return response
 
 

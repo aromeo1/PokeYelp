@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Pokemon
+from app.models import db, Pokemon, Image
 from app.forms import PokemonForm
 
 pokemon_routes = Blueprint('pokemon', __name__)
@@ -20,15 +20,26 @@ def create_pokemon():
         pokemon = Pokemon(
             name=form.data['name'],
             type=form.data['type'],
-            abilities=form.data['abilities'],
-            height=form.data['height'],
-            weight=form.data['weight'],
+            type_secondary=form.data['type_secondary'],
+            region=form.data['region'],
+            category=form.data['category'],
             description=form.data['description'],
             user_id=current_user.id
         )
         
         db.session.add(pokemon)
         db.session.commit()
+        
+        # Create image record if URL is provided
+        if form.data['image_url']:
+            image = Image(
+                url=form.data['image_url'],
+                pokemon_id=pokemon.id,
+                user_id=current_user.id
+            )
+            db.session.add(image)
+            db.session.commit()
+        
         return jsonify(pokemon.to_dict()), 201
     
     return jsonify({'errors': form.errors}), 400
@@ -52,9 +63,9 @@ def update_pokemon(id):
     if form.validate_on_submit():
         pokemon.name = form.data['name']
         pokemon.type = form.data['type']
-        pokemon.abilities = form.data['abilities']
-        pokemon.height = form.data['height']
-        pokemon.weight = form.data['weight']
+        pokemon.type_secondary = form.data['type_secondary']
+        pokemon.region = form.data['region']
+        pokemon.category = form.data['category']
         pokemon.description = form.data['description']
         
         db.session.commit()
@@ -69,6 +80,11 @@ def delete_pokemon(id):
     
     if pokemon.user_id != current_user.id:
         return jsonify({'error': 'Unauthorized'}), 403
+    
+    # Delete associated images (only database records, not files)
+    images = Image.query.filter_by(pokemon_id=id).all()
+    for image in images:
+        db.session.delete(image)
     
     db.session.delete(pokemon)
     db.session.commit()

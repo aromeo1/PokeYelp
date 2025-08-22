@@ -19,7 +19,8 @@ def create_pokemon_review(pokemon_id):
     if form.validate_on_submit():
         review = Review(
             rating=form.data['rating'],
-            comment=form.data['comment'],
+            title=form.data['title'],
+            body=form.data['body'],
             pokemon_id=pokemon_id,
             user_id=current_user.id
         )
@@ -48,7 +49,8 @@ def update_review(id):
     
     if form.validate_on_submit():
         review.rating = form.data['rating']
-        review.comment = form.data['comment']
+        review.title = form.data['title']
+        review.body = form.data['body']
         
         db.session.commit()
         return jsonify(review.to_dict())

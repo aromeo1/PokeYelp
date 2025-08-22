@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkSignup } from "../../redux/session";
+import { thunkSignup, thunkDemoLogin } from "../../redux/session";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -38,54 +38,84 @@ function SignupFormModal() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    const serverResponse = await dispatch(thunkDemoLogin());
+    
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
+  };
+
   return (
-    <>
+    <div className="signup-modal">
       <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <div className="error">{errors.server}</div>}
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
             type="text"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
+          {errors.email && <div className="field-error">{errors.email}</div>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
+            id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          Password
+          {errors.username && <div className="field-error">{errors.username}</div>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+          {errors.password && <div className="field-error">{errors.password}</div>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
+            id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+          {errors.confirmPassword && <div className="field-error">{errors.confirmPassword}</div>}
+        </div>
+
+        <div className="modal-buttons">
+          <button type="submit">Sign Up</button>
+        </div>
       </form>
-    </>
+      
+      <div className="demo-login-section">
+        <button 
+          type="button" 
+          className="demo-login-button"
+          onClick={handleDemoLogin}
+        >
+          Login as Demo User
+        </button>
+      </div>
+    </div>
   );
 }
 

@@ -1,0 +1,193 @@
+.pokemon-detail-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+
+.detail-container {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.pokemon-header {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.detail-pokemon-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+.pokemon-info-section {
+  flex: 1;
+}
+
+.pokemon-header-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.detail-pokemon-name {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+.pokemon-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-pokemon-button,
+.delete-pokemon-button {
+  background: white;
+  color: black;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+}
+
+.edit-pokemon-button:hover,
+.delete-pokemon-button:hover {
+  background-color: #f8f9fa;
+  border-color: #999;
+}
+
+.pokemon-type {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.pokemon-meta {
+  margin-bottom: 15px;
+}
+
+.meta-item {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.pokemon-rating {
+  margin-bottom: 20px;
+}
+
+.stars {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.rating-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.pokemon-description {
+  margin-bottom: 20px;
+}
+
+.pokemon-description h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.pokemon-description p {
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.reviews-section {
+  margin-bottom: 20px;
+}
+
+.reviews-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.review-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.review-meta {
+  flex: 1;
+}
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-review-button,
+.delete-review-button {
+  background: white;
+  color: black;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+}
+
+.edit-review-button:hover,
+.delete-review-button:hover {
+  background-color: #f8f9fa;
+  border-color: #999;
+}
+
+.review-card p {
+  margin: 5px 0;
+  color: #555;
+  line-height: 1.4;
+}
+
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.loading-container h2,
+.error-container h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.error-container p {
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
