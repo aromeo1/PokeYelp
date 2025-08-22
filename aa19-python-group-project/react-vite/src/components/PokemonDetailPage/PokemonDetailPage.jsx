@@ -255,6 +255,9 @@ const PokemonDetailPage = () => {
                     </div>
                   )}
                 </div>
+                {review.title && (
+                  <h4 className="review-title">{review.title}</h4>
+                )}
                 {review.body && (
                   <p>{review.body}</p>
                 )}

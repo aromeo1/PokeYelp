@@ -166,6 +166,13 @@
   border-color: #999;
 }
 
+.review-title {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
 .review-card p {
   margin: 5px 0;
   color: #555;
